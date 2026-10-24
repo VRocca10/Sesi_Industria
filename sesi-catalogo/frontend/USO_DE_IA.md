@@ -21,6 +21,8 @@ Na carga inicial, foi aproveitada a transformação dos dados fictícios do fron
 
 Na etapa dos endpoints, o Codex criou DTOs, serviço de consulta e controllers para listar cursos, consultar detalhes e listar categorias. Foram utilizadas as documentações oficiais do PostgreSQL e do Npgsql para a busca com `unaccent` e `ILIKE`. Foram executados 34 testes HTTP contra o banco local, cobrindo dados completos, pesquisa, filtros, retorno vazio, validações, 404 e indisponibilidade de operações de escrita. A resposta 500 foi verificada em uma instância temporária com conexão inválida, confirmando ausência de detalhes da exceção no corpo da resposta. O front permaneceu sem integração nesta etapa.
 
+Na etapa seguinte, o prompt “agora vamos começar a integração” orientou a conexão do front à API via Axios. Foram aproveitados os endpoints existentes para listagem, filtros, categorias, detalhes e aulas. Foram implementados cancelamento, debounce, validação do contrato, estados de erro e política CORS com origens explícitas. Os dados locais deixaram de ser importados pela aplicação. A validação incluiu 15 testes unitários do front, 36 testes HTTP e dois roteiros de navegador com API e PostgreSQL reais. Um roteiro também simulou respostas fora de ordem para verificar que uma busca antiga não substitui a atual. O layout e os arquivos CSS foram preservados.
+
 - Compilação TypeScript e build Vite.
 - Sete testes automatizados da pesquisa e dos filtros, incluindo acentos, nome breve, combinação de critérios e resultados vazios.
 - Testes em Chromium de busca, seleção de filtros, persistência na URL, limpeza, navegação e disponibilidade de matrícula.
@@ -35,3 +37,7 @@ A primeira implementação permitia que cursos “Em breve” e “Encerrado” 
 Correção: status passou a aparecer nos cartões do catálogo e nos detalhes. Os dois controles de matrícula nos detalhes ficam desabilitados com mensagem correspondente para ofertas indisponíveis. O teste de navegador verifica esse comportamento para um curso de cada status indisponível.
 
 O código gerado por IA foi ajustado durante a implementação e não foi considerado validado apenas por ter sido gerado.
+
+## Preparação para Vercel
+
+Prompt: “agora prepare meu codigo para ser versionado na vercel”. Codex foi utilizado para configurar o build Vite, o redirecionamento das rotas do React Router e o guia de publicação com API .NET externa. Foi identificado que o padrão local da API não funcionaria para visitantes do site publicado. A correção foi validar `VITE_API_BASE_URL` no build da Vercel, exigindo uma URL pública HTTPS. A configuração foi validada por compilação, testes existentes e simulações de build com variáveis ausentes, locais e públicas. O deploy real depende das contas, da API hospedada e dos endereços definitivos.

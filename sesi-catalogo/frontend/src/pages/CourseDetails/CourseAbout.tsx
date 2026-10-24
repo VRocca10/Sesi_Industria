@@ -6,7 +6,7 @@ export function CourseAbout({ course }: { course: Course }) {
     <section className="container course-about" aria-labelledby="course-about-title">
       <div>
         <h2 id="course-about-title">Sobre o curso</h2>
-        {course.id === 'matematica-precisao' ? <p>Explore nosso curso de Matemática para a Precisão: Medidas e Escalas na Metalurgia, perfeito para quem deseja se destacar nesse campo! Este programa abrangente foi desenvolvido para capacitar profissionais com as habilidades e conhecimentos fundamentais para garantir medições precisas e eficientes no ambiente metalúrgico.</p> : <p>Explore o curso {title}. {course.description} Desenvolvido para {course.targetAudience.charAt(0).toLowerCase() + course.targetAudience.slice(1)}</p>}
+        {course.id === 'matematica-precisao' ? <p>Explore nosso curso de {title}, perfeito para quem deseja se destacar nesse campo! Este programa abrangente foi desenvolvido para capacitar profissionais com as habilidades e conhecimentos fundamentais para garantir medições precisas e eficientes no ambiente metalúrgico.</p> : <p>Explore o curso {title}. {course.description} Desenvolvido para {course.targetAudience.charAt(0).toLowerCase() + course.targetAudience.slice(1)}</p>}
       </div>
       <div className="course-accordions">
         <details>

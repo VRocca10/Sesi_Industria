@@ -7,15 +7,15 @@ import { Courses } from '../pages/Courses/Courses'
 import { CourseDetails } from '../pages/CourseDetails/CourseDetails'
 import { Learning } from '../pages/Learning/Learning'
 import { Button } from '../components/Button/Button'
-import { courses } from '../data/courses'
 
 export function AppRoutes() {
   const { pathname, hash } = useLocation()
   const learning = pathname.startsWith('/aprender/')
   useEffect(() => {
-    const course = courses.find((item) => pathname === `/cursos/${item.id}` || pathname === `/aprender/${item.id}`)
-    document.title = course ? `${learning ? 'Sala de aula | ' : ''}${course.shortName} | SESI + Indústria` : pathname === '/' ? 'SESI + Indústria | Cursos para sua carreira'
+    document.title = pathname === '/' ? 'SESI + Indústria | Cursos para sua carreira'
       : pathname === '/cursos' ? 'Catálogo de cursos | SESI + Indústria'
+      : learning ? 'Sala de aula | SESI + Indústria'
+      : pathname.startsWith('/cursos/') ? 'Curso | SESI + Indústria'
       : 'Página não encontrada | SESI + Indústria'
     const frame = requestAnimationFrame(() => {
       if (hash) document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: 'instant' })

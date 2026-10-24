@@ -100,3 +100,23 @@ test('o contrato não publica gerenciamento de cursos', async () => {
     assert.equal(response.status, 405)
   }
 })
+
+test('CORS permite a origem configurada do front sem liberar qualquer origem', async () => {
+  const origin = process.env.FRONTEND_ORIGIN ?? 'http://localhost:5173'
+  const response = await fetch(new URL('/api/courses', base), { headers: { Origin: origin } })
+  assert.equal(response.status, 200)
+  assert.equal(response.headers.get('access-control-allow-origin'), origin)
+  const denied = await fetch(new URL('/api/courses', base), { headers: { Origin: 'https://origem-nao-configurada.example' } })
+  assert.equal(denied.headers.get('access-control-allow-origin'), null)
+})
+
+test('CORS responde ao preflight de leitura do front', async () => {
+  const origin = process.env.FRONTEND_ORIGIN ?? 'http://localhost:5173'
+  const response = await fetch(new URL('/api/courses', base), {
+    method: 'OPTIONS',
+    headers: { Origin: origin, 'Access-Control-Request-Method': 'GET', 'Access-Control-Request-Headers': 'Content-Type' },
+  })
+  assert.equal(response.status, 204)
+  assert.equal(response.headers.get('access-control-allow-origin'), origin)
+  assert.ok(response.headers.get('access-control-allow-methods').includes('GET'))
+})

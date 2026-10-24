@@ -1,4 +1,4 @@
-import type { Course, CourseCategory } from '../types/course'
+import type { Course, CourseCategory } from '../../src/types/course'
 
 const mathematics: CourseCategory = {
   id: 'matematica', name: 'Matemática', icon: '/assets/icon-matematica-20px.svg',
@@ -18,7 +18,7 @@ export const courses: Course[] = [
     description: 'Aplicação de grandezas, proporções e escalas em processos de corte, furação e usinagem.',
     category: mathematics, modality: 'A distância', workloadHours: 20,
     targetAudience: 'Operadores de máquinas e estudantes da área de metalurgia.',
-    status: 'Disponível', image: '/assets/banner-ava.webp', availableFrom: '2026-01-15',
+    status: 'Disponível', image: '/assets/courses/matematica-precisao.jpg', availableFrom: '2026-01-15',
     modules: [
       { id: 'medidas', name: 'Grandezas e medidas', lessons: [
         { id: 'unidades', name: 'Unidades de medida', description: 'Conversões entre milímetros, centímetros e metros aplicadas a peças industriais.' },
@@ -35,7 +35,7 @@ export const courses: Course[] = [
     description: 'Explora formas geométricas, simetria e padrões matemáticos presentes em tecidos e estampas.',
     category: mathematics, modality: 'Semipresencial', workloadHours: 32,
     targetAudience: 'Profissionais de confecção, modelistas e estudantes de design.',
-    status: 'Disponível', image: '/assets/hero-image-960.webp', availableFrom: '2026-02-02',
+    status: 'Disponível', image: '/assets/courses/geometria-textil.jpg', availableFrom: '2026-02-02',
     modules: [
       { id: 'formas', name: 'Geometria no tecido', lessons: [
         { id: 'simetria', name: 'Simetria e padrões', description: 'Identificação de translações, rotações e reflexões em estampas.' },
@@ -52,7 +52,7 @@ export const courses: Course[] = [
     description: 'Leitura e interpretação de dados de controle de qualidade e produtividade.',
     category: mathematics, modality: 'A distância', workloadHours: 24,
     targetAudience: 'Assistentes de qualidade e líderes de linhas de produção.',
-    status: 'Em breve', image: '/assets/video-thumb-960.webp', availableFrom: '2027-02-10',
+    status: 'Em breve', image: '/assets/courses/estatistica-qualidade.jpg', availableFrom: '2027-02-10',
     modules: [
       { id: 'dados', name: 'Dados da produção', lessons: [
         { id: 'amostras', name: 'Amostragem industrial', description: 'Organização de amostras e construção de tabelas de frequência.' },
@@ -69,7 +69,7 @@ export const courses: Course[] = [
     description: 'Estudo de forças, atrito, calor e energia em máquinas, fornos e prensas.',
     category: science, modality: 'Semipresencial', workloadHours: 40,
     targetAudience: 'Técnicos de manutenção e estudantes de processos metalúrgicos.',
-    status: 'Disponível', image: '/assets/video-thumb-960.webp', availableFrom: '2026-03-12',
+    status: 'Disponível', image: '/assets/courses/fisica-metalurgia.jpg', availableFrom: '2026-03-12',
     modules: [
       { id: 'movimento', name: 'Forças em máquinas', lessons: [
         { id: 'atrito', name: 'Movimento e atrito', description: 'Relação entre forças e deslocamento de componentes de uma máquina.' },
@@ -86,7 +86,7 @@ export const courses: Course[] = [
     description: 'Estudo das transformações químicas e do uso consciente de recursos na indústria.',
     category: science, modality: 'A distância', workloadHours: 16,
     targetAudience: 'Auxiliares de laboratório e profissionais interessados em sustentabilidade.',
-    status: 'Encerrado', image: '/assets/banner-ava.webp',
+    status: 'Encerrado', image: '/assets/courses/quimica-sustentabilidade.jpg',
     modules: [
       { id: 'materiais', name: 'Materiais e reações', lessons: [
         { id: 'transformacoes', name: 'Transformações químicas', description: 'Reconhecimento de reações e propriedades dos materiais em processos simulados.' },
@@ -102,7 +102,7 @@ export const courses: Course[] = [
     description: 'Leitura de instruções, elaboração de registros e comunicação clara no ambiente de trabalho.',
     category: languages, modality: 'A distância', workloadHours: 12,
     targetAudience: 'Aprendizes e profissionais em início de carreira na indústria.',
-    status: 'Em breve', image: '/assets/hero-image-960.webp', availableFrom: '2027-03-01',
+    status: 'Em breve', image: '/assets/courses/comunicacao-industria.jpg', availableFrom: '2027-03-01',
     modules: [
       { id: 'leitura', name: 'Leitura técnica', lessons: [
         { id: 'instrucoes', name: 'Instruções de trabalho', description: 'Identificação de informações essenciais em manuais e procedimentos fictícios.' },

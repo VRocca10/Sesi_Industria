@@ -35,6 +35,11 @@ export interface Course {
   targetAudience: string
   status: CourseStatus
   image: string
-  availableFrom?: string
+  availableFrom?: string | null
   modules: CourseModule[]
+}
+
+export interface CourseList {
+  items: readonly Course[]
+  total: number
 }

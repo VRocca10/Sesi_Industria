@@ -9,3 +9,10 @@ test-results/
 playwright-report/
 bin/
 obj/
+.vercel/
+publish/
+artifacts/
+*.zip
+.vs/
+*.user
+*.suo

@@ -18,6 +18,12 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddScoped<CourseCatalogService>();
 builder.Services.AddProblemDetails();
+var frontendOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
+builder.Services.AddCors(options => options.AddPolicy("Frontend", policy =>
+{
+    if (frontendOrigins.Length > 0)
+        policy.WithOrigins(frontendOrigins).WithMethods("GET").AllowAnyHeader();
+}));
 
 var app = builder.Build();
 app.UseExceptionHandler();
@@ -28,6 +34,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("Frontend");
 
 app.UseAuthorization();
 

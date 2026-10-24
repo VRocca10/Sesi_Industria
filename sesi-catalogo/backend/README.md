@@ -1,6 +1,6 @@
 # Backend — Catálogo SESI + Indústria
 
-Etapa atual: modelos, contexto Entity Framework Core, migrations, carga inicial e endpoints de consulta implementados e verificados no PostgreSQL. O front-end ainda utiliza os dados locais e será integrado em uma próxima etapa.
+Etapa atual: modelos, contexto Entity Framework Core, migrations, carga inicial e endpoints de consulta implementados e verificados no PostgreSQL. O front-end está integrado aos endpoints de cursos, detalhes e categorias.
 
 ## Tecnologias
 
@@ -14,7 +14,7 @@ C#, ASP.NET Core 10, Entity Framework Core 10 e PostgreSQL com o provedor Npgsql
 - `Sesi.Catalogo.Api/Migrations`: criação e histórico do esquema.
 - `Sesi.Catalogo.Api/Data/Seed`: dados fictícios e carga inicial idempotente.
 - `tests/SeedVerification`: verificação dos dados gravados e da repetição da carga.
-- `Sesi.Catalogo.Api/Controllers`: endpoints de cursos e categorias, além do exemplo temporário do template.
+- `Sesi.Catalogo.Api/Controllers`: endpoints de cursos e categorias, com consultas do catálogo.
 - `Sesi.Catalogo.Api/DTOs`: contrato JSON e validação de parâmetros.
 - `Sesi.Catalogo.Api/Services`: consultas assíncronas ao catálogo.
 - `tests/api.test.mjs`: testes HTTP dos endpoints usando Node.js.
@@ -93,7 +93,17 @@ As verificações foram executadas com sucesso no PostgreSQL local. Para visuali
 
 ## Próximas etapas
 
-Integração com o front-end, configuração de CORS, publicação gratuita e consolidação dos entregáveis. Não há integração com Moodle nesta etapa. O endpoint `GET /WeatherForecast` permanece temporariamente como exemplo.
+Publicação gratuita e consolidação dos entregáveis. Não há integração com Moodle nesta etapa.
+
+## Integração e CORS
+
+A política `Frontend` permite consultas GET apenas a partir das origens configuradas em `Cors:AllowedOrigins`, sem credenciais. Em Development, estão configuradas as portas 5173 e 5174 do Vite e 4173 do preview para `localhost` e `127.0.0.1`. Se o Vite iniciar em outra porta, inclua a origem exata nessa configuração ou selecione uma porta já permitida. Não use barra final nas origens.
+
+Em produção, as origens devem ser configuradas explicitamente no ambiente da hospedagem, por exemplo `Cors__AllowedOrigins__0=https://seu-front.example`. A configuração de Development não é carregada em produção. Não foi habilitado acesso de qualquer origem.
+
+O frontend recebe a base da API por `VITE_API_BASE_URL`, com padrão `http://localhost:5000/api`. O catálogo envia `search`, `category`, `modality` e `status` e utiliza a resposta `{items,total}`. Detalhes e sala de aula consultam `/api/courses/{id}`; os filtros de categoria consultam `/api/categories`.
+
+Após atualizar o código da API, pare a instância antiga com `Ctrl + C` e inicie novamente para carregar a política CORS. Inicie o Vite em outro terminal.
 
 ## Endpoints
 
@@ -159,4 +169,4 @@ $env:API_BASE_URL="http://localhost:5010"
 node --test tests/api.test.mjs
 ```
 
-Foram executados 34 testes HTTP contra o PostgreSQL, incluindo comparação dos dados dos seis cursos, ordenação de módulos/aulas, acentos compostos e decompostos, caracteres especiais, filtros combinados, quantidade de resultados, resposta vazia, validação, 404 e ausência de operações de gerenciamento. Também foi verificada separadamente a resposta 500 com o banco indisponível, sem expor detalhes da exceção. As instâncias temporárias utilizadas nos testes foram encerradas.
+Foram executados 36 testes HTTP contra o PostgreSQL, incluindo comparação dos dados dos seis cursos, ordenação de módulos/aulas, acentos compostos e decompostos, caracteres especiais, filtros combinados, quantidade de resultados, resposta vazia, validação, 404, ausência de operações de gerenciamento e CORS. Para testar uma origem diferente, configure `FRONTEND_ORIGIN` com uma origem permitida no servidor. Também foi verificada separadamente a resposta 500 com o banco indisponível, sem expor detalhes da exceção.

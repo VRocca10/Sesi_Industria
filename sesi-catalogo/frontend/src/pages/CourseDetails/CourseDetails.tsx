@@ -1,9 +1,10 @@
 import { useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { ArrowRight, Award, CalendarCheck, Play } from 'lucide-react'
-import { Button } from '../../components/Button/Button'
 import { TestimonialsSection } from '../../sections/TestimonialsSection/TestimonialsSection'
-import { courses } from '../../data/courses'
+import type { Course } from '../../types/course'
+import { useCourse } from '../../hooks/useCourse'
+import { CourseLoadState } from '../../components/CourseLoadState/CourseLoadState'
 import { CourseBenefits } from './CourseBenefits'
 import { CourseAbout } from './CourseAbout'
 import { EnrollmentButton } from './EnrollmentButton'
@@ -11,9 +12,13 @@ import { VideoDialog } from '../../components/VideoDialog/VideoDialog'
 
 export function CourseDetails() {
   const { courseId } = useParams()
+  const { state, retry } = useCourse(courseId)
+  if (state.status !== 'success' || !state.data) return <CourseLoadState state={state} onRetry={retry} />
+  return <CourseDetailsContent key={state.data.id} course={state.data} />
+}
+
+function CourseDetailsContent({ course }: { course: Course }) {
   const videoDialog = useRef<HTMLDialogElement>(null)
-  const course = courses.find((item) => item.id === courseId)
-  if (!course) return <section className="container placeholder-page"><h1>Curso não encontrado</h1><Button to="/cursos">Ver cursos</Button></section>
   const title = course.fullName
   const canEnroll = course.status === 'Disponível'
   const startDate = course.availableFrom ? new Intl.DateTimeFormat('pt-BR', { timeZone: 'UTC' }).format(new Date(`${course.availableFrom}T00:00:00Z`)) : 'A definir'

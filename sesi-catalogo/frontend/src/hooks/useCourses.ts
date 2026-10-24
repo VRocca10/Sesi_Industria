@@ -1,29 +1,25 @@
-import { useEffect, useState } from 'react'
+import { useCallback } from 'react'
 import { getCourses } from '../services/courseService'
 import type { Course } from '../types/course'
+import type { CourseFilters } from '../utils/filterCourses'
+import { useDebouncedValue } from './useDebouncedValue'
+import { useRemoteResource } from './useRemoteResource'
 
 export type CourseState =
   | { status: 'loading' }
-  | { status: 'success'; courses: readonly Course[] }
+  | { status: 'success'; courses: readonly Course[]; total: number }
   | { status: 'error' }
 
-export function useCourses() {
-  const [state, setState] = useState<CourseState>({ status: 'loading' })
-  const [attempt, setAttempt] = useState(0)
+const emptyFilters: CourseFilters = { query: '', category: '', modality: '', status: '' }
 
-  useEffect(() => {
-    let active = true
-    void getCourses().then(
-      (courses) => { if (active) setState({ status: 'success', courses }) },
-      () => { if (active) setState({ status: 'error' }) },
-    )
-    return () => { active = false }
-  }, [attempt])
+export function useCourses(filters: CourseFilters = emptyFilters) {
+  const { query, category, modality, status } = filters
+  const search = useDebouncedValue(query, 250)
+  const load = useCallback((signal: AbortSignal) => getCourses({ query: search, category, modality, status }, signal), [search, category, modality, status])
+  const resource = useRemoteResource(load)
 
-  function retry() {
-    setState({ status: 'loading' })
-    setAttempt((value) => value + 1)
-  }
-
-  return { state, retry }
+  const state: CourseState = query !== search ? { status: 'loading' }
+    : resource.state.status === 'success' ? { status: 'success', courses: resource.state.data.items, total: resource.state.data.total }
+    : resource.state
+  return { state, retry: resource.retry }
 }

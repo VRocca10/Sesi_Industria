@@ -3,7 +3,7 @@ import type { RefObject } from 'react'
 import { Search, SlidersHorizontal } from 'lucide-react'
 import { Button } from '../../components/Button/Button'
 import { FilterSelect } from '../../components/FilterSelect/FilterSelect'
-import type { Course } from '../../types/course'
+import type { CourseCategory } from '../../types/course'
 import { courseModalities, courseStatuses } from '../../types/course'
 import type { CourseFilters } from '../../utils/filterCourses'
 
@@ -11,7 +11,7 @@ const modalityOptions = [{ value: '', label: 'Todas as modalidades' }, ...course
 const statusOptions = [{ value: '', label: 'Todos os status' }, ...courseStatuses.map((value) => ({ value, label: value }))]
 
 interface Props {
-  courses: readonly Course[]
+  categories: readonly CourseCategory[]
   filters: CourseFilters
   hasFilters: boolean
   searchInput: RefObject<HTMLInputElement | null>
@@ -19,11 +19,10 @@ interface Props {
   onClear: () => void
 }
 
-export function CatalogFilters({ courses, filters, hasFilters, searchInput, onChange, onClear }: Props) {
+export function CatalogFilters({ categories, filters, hasFilters, searchInput, onChange, onClear }: Props) {
   const categoryOptions = useMemo(() => {
-    const categories = [...new Map(courses.map((course) => [course.category.id, course.category])).values()]
     return [{ value: '', label: 'Todas as categorias' }, ...categories.map((category) => ({ value: category.id, label: category.name }))]
-  }, [courses])
+  }, [categories])
 
   return (
     <form className="catalog-filters" aria-label="Pesquisar e filtrar cursos" onSubmit={(event) => event.preventDefault()}>

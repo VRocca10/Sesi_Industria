@@ -7,7 +7,12 @@ const base = process.env.TEST_BASE_URL || 'http://127.0.0.1:5174'
   try {
     const page = await browser.newPage({ viewport: { width: 1440, height: 900 } })
     const errors = []
+    const apiRequests = []
     page.on('pageerror', (error) => errors.push(error.message))
+    page.on('request', (request) => {
+      const url = new URL(request.url())
+      if (url.pathname.startsWith('/api/')) apiRequests.push(url)
+    })
     await page.goto(`${base}/cursos?categoria=inexistente&modalidade=inexistente&status=inexistente&origem=teste`)
     await page.getByText('6 cursos encontrados', { exact: true }).waitFor()
     await page.waitForURL((url) => !url.searchParams.has('categoria') && !url.searchParams.has('modalidade') && !url.searchParams.has('status'))
@@ -26,6 +31,7 @@ const base = process.env.TEST_BASE_URL || 'http://127.0.0.1:5174'
     assert.equal(await search.inputValue(), 'matematica para a precisao')
     assert.equal(await search.evaluate((input) => document.activeElement === input), true)
     await page.getByText('1 curso encontrado', { exact: true }).waitFor()
+    assert.ok(apiRequests.some((url) => url.searchParams.get('search') === 'matematica para a precisao'))
     await page.getByRole('button', { name: 'Limpar filtros', exact: true }).click()
     await page.getByText('6 cursos encontrados', { exact: true }).waitFor()
     await page.getByLabel('Nome do curso', { exact: true }).fill('FISICA')
@@ -37,6 +43,7 @@ const base = process.env.TEST_BASE_URL || 'http://127.0.0.1:5174'
     await selectFilter('Categoria', 'Ciências da natureza')
     await selectFilter('Modalidade', 'Semipresencial')
     await selectFilter('Status', 'Disponível')
+    await page.getByText('1 curso encontrado', { exact: true }).waitFor()
     assert.equal(await page.locator('.course-catalog-grid article').count(), 1)
     await page.reload()
     await page.getByText('1 curso encontrado', { exact: true }).waitFor()
@@ -48,7 +55,7 @@ const base = process.env.TEST_BASE_URL || 'http://127.0.0.1:5174'
     const category = page.getByRole('combobox', { name: 'Categoria', exact: true })
     await category.focus()
     await page.keyboard.press('ArrowDown')
-    await page.keyboard.press('End')
+    await page.keyboard.press('l')
     await page.keyboard.press('Enter')
     await page.getByText('1 curso encontrado', { exact: true }).waitFor()
     assert.equal(await category.getAttribute('aria-expanded'), 'false')
@@ -58,6 +65,7 @@ const base = process.env.TEST_BASE_URL || 'http://127.0.0.1:5174'
     assert.ok(Math.abs(menuBox.y - (fieldBox.y + fieldBox.height) - 4) < 1)
     await page.keyboard.press('Escape')
     await page.getByRole('button', { name: 'Limpar filtros', exact: true }).click()
+    await page.getByText('6 cursos encontrados', { exact: true }).waitFor()
     for (const width of [320, 375, 768, 1024, 1440]) {
       await page.setViewportSize({ width, height: 900 })
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Overflow ${width}`)
@@ -86,6 +94,7 @@ const base = process.env.TEST_BASE_URL || 'http://127.0.0.1:5174'
     await page.getByRole('heading', { name: 'Boas práticas', exact: true }).waitFor()
     for (const id of ['estatistica-qualidade', 'quimica-sustentabilidade']) {
       await page.goto(`${base}/cursos/${id}`)
+      await page.locator('.course-enroll-action:disabled').first().waitFor()
       assert.equal(await page.getByRole('link', { name: 'Matricule-se', exact: true }).count(), 0)
       assert.equal(await page.locator('.course-enroll-action:disabled').count(), 2)
       await page.goto(`${base}/aprender/${id}`)
@@ -98,23 +107,19 @@ const base = process.env.TEST_BASE_URL || 'http://127.0.0.1:5174'
     }
     assert.deepEqual(errors, [])
     const failurePage = await browser.newPage()
-    await failurePage.route(/\/src\/services\/courseService\.ts(?:\?.*)?$/, async (route) => {
-      await route.fulfill({ contentType: 'application/javascript', body: `
-        export async function getCourses() {
-          await new Promise(resolve => {
-            const wait = () => window.__catalogProceed ? resolve() : setTimeout(wait, 20);
-            wait();
-          });
-          if (!window.__catalogRetried) throw new Error('Falha simulada');
-          return (await import('/src/data/courses.ts')).courses;
-        }
-      ` })
+    let releaseRequest
+    const requestGate = new Promise((resolve) => { releaseRequest = resolve })
+    let fail = true
+    await failurePage.route(/\/api\/courses(?:\?.*)?$/, async (route) => {
+      await requestGate
+      if (!fail) return route.continue()
+      await route.fulfill({ status: 503, contentType: 'application/problem+json', headers: { 'access-control-allow-origin': new URL(base).origin }, body: JSON.stringify({ status: 503, title: 'Falha simulada' }) })
     })
     await failurePage.goto(`${base}/cursos`)
     await failurePage.getByText('Carregando cursos…', { exact: true }).waitFor()
-    await failurePage.evaluate(() => { window.__catalogProceed = true })
+    releaseRequest()
     await failurePage.getByRole('heading', { name: 'Não foi possível carregar os cursos' }).waitFor()
-    await failurePage.evaluate(() => { window.__catalogRetried = true })
+    fail = false
     await failurePage.getByRole('button', { name: 'Tentar novamente' }).click()
     await failurePage.getByText('6 cursos encontrados', { exact: true }).waitFor()
     await page.goto(`${base}/cursos`)
@@ -133,6 +138,9 @@ const base = process.env.TEST_BASE_URL || 'http://127.0.0.1:5174'
     await page.getByText('6 cursos encontrados', { exact: true }).waitFor()
     if (process.env.TEST_SCREENSHOT) await page.screenshot({ path: process.env.TEST_SCREENSHOT, fullPage: true })
     assert.deepEqual(errors, [])
+    assert.ok(apiRequests.some((url) => url.pathname === '/api/categories'))
+    assert.ok(apiRequests.some((url) => url.pathname === '/api/courses/fisica-metalurgia'))
+    assert.ok(apiRequests.some((url) => url.searchParams.get('category') === 'ciencias-natureza' && url.searchParams.get('modality') === 'Semipresencial' && url.searchParams.get('status') === 'Disponível'))
     console.log('PASS: catálogo, filtros, digitação contínua, URL, estados, teclado, 5 larguras, matrícula, vídeos e navegação/pesquisa de aulas.')
   } finally { await browser.close() }
 })().catch((error) => { console.error(error); process.exitCode = 1 })

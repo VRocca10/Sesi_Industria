@@ -1,6 +1,6 @@
 # Revisão de estrutura e performance do front-end
 
-Escopo: refatorar o código existente sem alterar layout, CSS, textos, telas ou regras de navegação. A integração continua adiada.
+Escopo desta revisão anterior: refatorar o código existente sem alterar layout, CSS, textos, telas ou regras de navegação. A integração estava adiada naquele momento e foi implementada posteriormente; consulte o README para o estado atual.
 
 ## Melhorias aplicadas
 
