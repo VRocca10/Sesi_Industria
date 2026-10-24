@@ -41,3 +41,5 @@ O código gerado por IA foi ajustado durante a implementação e não foi consid
 ## Preparação para Vercel
 
 Prompt: “agora prepare meu codigo para ser versionado na vercel”. Codex foi utilizado para configurar o build Vite, o redirecionamento das rotas do React Router e o guia de publicação com API .NET externa. Foi identificado que o padrão local da API não funcionaria para visitantes do site publicado. A correção foi validar `VITE_API_BASE_URL` no build da Vercel, exigindo uma URL pública HTTPS. A configuração foi validada por compilação, testes existentes e simulações de build com variáveis ausentes, locais e públicas. O deploy real depende das contas, da API hospedada e dos endereços definitivos.
+
+Na orientação sobre publicação da API, foram adicionados Dockerfile multiestágio .NET 10 e .dockerignore para o Render, com execução sem root na porta 8080. O publish Release foi validado; a imagem Docker e a publicação remota ainda não foram executadas.

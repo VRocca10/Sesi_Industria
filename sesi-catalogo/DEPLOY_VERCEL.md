@@ -48,3 +48,13 @@ O build na Vercel falha com uma mensagem explícita se a URL da API estiver ause
 A configuração foi preparada localmente; nenhum deploy, conta ou serviço pago foi criado. Escolha serviços gratuitos para front, API e banco, conforme o enunciado. Os links definitivos e o ZIP dos entregáveis continuam pendentes.
 
 Referências: [Vite na Vercel](https://vercel.com/docs/frameworks/frontend/vite), [variáveis de ambiente](https://vercel.com/docs/environment-variables) e [runtimes oficiais](https://vercel.com/docs/functions/runtimes).
+
+## API no Render com Docker
+
+O Dockerfile está em `backend/Sesi.Catalogo.Api/Dockerfile`. No Render, crie um Web Service conectado ao GitHub, selecione Docker e o plano Free. Use Root Directory `sesi-catalogo/backend/Sesi.Catalogo.Api` e Dockerfile Path `./Dockerfile`. O contexto do build deve ser essa mesma pasta (`.`). A aplicação escuta na porta 8080. Use `/api/categories` como Health Check Path.
+
+Configure `ConnectionStrings__DefaultConnection` com a conexão Npgsql do banco público e `Cors__AllowedOrigins__0` com a origem definitiva da Vercel. Aplique as migrations ao banco remoto antes de publicar, conforme os comandos anteriores. O contêiner não aplica migrations automaticamente. Para PostgreSQL no Neon, use os dados exibidos em Connect e o formato `Host=HOST;Port=5432;Database=BANCO;Username=USUARIO;Password=SENHA;SSL Mode=VerifyFull`. Para migrations, prefira o endpoint direto, sem pooler.
+
+O plano gratuito da API pode suspender o serviço após inatividade e atrasar a primeira requisição. Essa limitação deve constar nos entregáveis. Fontes: [Docker no Render](https://render.com/docs/docker), [plano gratuito do Render](https://render.com/docs/free), [conexão Neon](https://neon.com/docs/connect/connect-from-any-app).
+
+O publish .NET foi validado localmente. A construção da imagem Docker e o deploy remoto permanecem pendentes, pois Docker não está disponível neste ambiente.
