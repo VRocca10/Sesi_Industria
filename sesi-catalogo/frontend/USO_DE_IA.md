@@ -15,6 +15,12 @@ Codex, da OpenAI, utilizado para implementar e revisar o front-end React/TypeScr
 
 ## Validação
 
+Na etapa inicial do backend, o Codex também foi utilizado para criar os modelos C#, o contexto e as configurações do EF Core e a migration inicial. Foram verificados compilação, aplicação ao PostgreSQL local, ausência de mudanças pendentes no modelo e repetição da atualização sem reaplicar a migration. A conexão usa User Secrets, sem registrar senha no código.
+
+Na carga inicial, foi aproveitada a transformação dos dados fictícios do front-end em um recurso JSON incorporado ao backend. A inserção utiliza as rotinas síncrona e assíncrona de seeding do EF Core, preservando chaves e ordenação. O verificador local confirmou três categorias, seis cursos, doze módulos e dezessete aulas, comparou todos os campos e repetiu as duas rotinas sem duplicação ou alteração dos registros. Foi identificado um conflito de versões transitivas do Entity Framework no projeto de verificação; as referências de runtime e design foram alinhadas e fixadas antes de repetir os testes com sucesso.
+
+Na etapa dos endpoints, o Codex criou DTOs, serviço de consulta e controllers para listar cursos, consultar detalhes e listar categorias. Foram utilizadas as documentações oficiais do PostgreSQL e do Npgsql para a busca com `unaccent` e `ILIKE`. Foram executados 34 testes HTTP contra o banco local, cobrindo dados completos, pesquisa, filtros, retorno vazio, validações, 404 e indisponibilidade de operações de escrita. A resposta 500 foi verificada em uma instância temporária com conexão inválida, confirmando ausência de detalhes da exceção no corpo da resposta. O front permaneceu sem integração nesta etapa.
+
 - Compilação TypeScript e build Vite.
 - Sete testes automatizados da pesquisa e dos filtros, incluindo acentos, nome breve, combinação de critérios e resultados vazios.
 - Testes em Chromium de busca, seleção de filtros, persistência na URL, limpeza, navegação e disponibilidade de matrícula.

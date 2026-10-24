@@ -1,0 +1,310 @@
+{
+  "categories": [
+    {
+      "id": "matematica",
+      "name": "Matemática",
+      "icon": "/assets/icon-matematica-20px.svg"
+    },
+    {
+      "id": "ciencias-natureza",
+      "name": "Ciências da natureza",
+      "icon": "/assets/icon-ciencias-natureza-20px.svg"
+    },
+    {
+      "id": "linguagens",
+      "name": "Linguagens",
+      "icon": "/assets/icon-linguagens-20px.svg"
+    }
+  ],
+  "courses": [
+    {
+      "id": "matematica-precisao",
+      "fullName": "Matemática para a Precisão: Medidas e Escalas na Metalurgia",
+      "shortName": "Matemática para a Precisão",
+      "description": "Aplicação de grandezas, proporções e escalas em processos de corte, furação e usinagem.",
+      "modality": "A distância",
+      "workloadHours": 20,
+      "targetAudience": "Operadores de máquinas e estudantes da área de metalurgia.",
+      "status": "Disponível",
+      "image": "/assets/banner-ava.webp",
+      "availableFrom": "2026-01-15",
+      "categoryId": "matematica"
+    },
+    {
+      "id": "geometria-textil",
+      "fullName": "Geometria e Modelagem no Design Têxtil",
+      "shortName": "Geometria e Modelagem",
+      "description": "Explora formas geométricas, simetria e padrões matemáticos presentes em tecidos e estampas.",
+      "modality": "Semipresencial",
+      "workloadHours": 32,
+      "targetAudience": "Profissionais de confecção, modelistas e estudantes de design.",
+      "status": "Disponível",
+      "image": "/assets/hero-image-960.webp",
+      "availableFrom": "2026-02-02",
+      "categoryId": "matematica"
+    },
+    {
+      "id": "estatistica-qualidade",
+      "fullName": "Estatística e Controle de Qualidade na Produção",
+      "shortName": "Estatística na Produção",
+      "description": "Leitura e interpretação de dados de controle de qualidade e produtividade.",
+      "modality": "A distância",
+      "workloadHours": 24,
+      "targetAudience": "Assistentes de qualidade e líderes de linhas de produção.",
+      "status": "Em breve",
+      "image": "/assets/video-thumb-960.webp",
+      "availableFrom": "2027-02-10",
+      "categoryId": "matematica"
+    },
+    {
+      "id": "fisica-metalurgia",
+      "fullName": "Física do Movimento e da Energia na Metalurgia",
+      "shortName": "Física na Metalurgia",
+      "description": "Estudo de forças, atrito, calor e energia em máquinas, fornos e prensas.",
+      "modality": "Semipresencial",
+      "workloadHours": 40,
+      "targetAudience": "Técnicos de manutenção e estudantes de processos metalúrgicos.",
+      "status": "Disponível",
+      "image": "/assets/video-thumb-960.webp",
+      "availableFrom": "2026-03-12",
+      "categoryId": "ciencias-natureza"
+    },
+    {
+      "id": "quimica-sustentabilidade",
+      "fullName": "Química e Sustentabilidade nos Processos Industriais",
+      "shortName": "Química e Sustentabilidade",
+      "description": "Estudo das transformações químicas e do uso consciente de recursos na indústria.",
+      "modality": "A distância",
+      "workloadHours": 16,
+      "targetAudience": "Auxiliares de laboratório e profissionais interessados em sustentabilidade.",
+      "status": "Encerrado",
+      "image": "/assets/banner-ava.webp",
+      "categoryId": "ciencias-natureza"
+    },
+    {
+      "id": "comunicacao-industria",
+      "fullName": "Comunicação e Leitura Técnica na Indústria",
+      "shortName": "Comunicação na Indústria",
+      "description": "Leitura de instruções, elaboração de registros e comunicação clara no ambiente de trabalho.",
+      "modality": "A distância",
+      "workloadHours": 12,
+      "targetAudience": "Aprendizes e profissionais em início de carreira na indústria.",
+      "status": "Em breve",
+      "image": "/assets/hero-image-960.webp",
+      "availableFrom": "2027-03-01",
+      "categoryId": "linguagens"
+    }
+  ],
+  "modules": [
+    {
+      "id": "medidas",
+      "name": "Grandezas e medidas",
+      "courseId": "matematica-precisao",
+      "position": 1
+    },
+    {
+      "id": "escalas",
+      "name": "Proporções e escalas",
+      "courseId": "matematica-precisao",
+      "position": 2
+    },
+    {
+      "id": "formas",
+      "name": "Geometria no tecido",
+      "courseId": "geometria-textil",
+      "position": 1
+    },
+    {
+      "id": "modelagem",
+      "name": "Modelagem e aproveitamento",
+      "courseId": "geometria-textil",
+      "position": 2
+    },
+    {
+      "id": "dados",
+      "name": "Dados da produção",
+      "courseId": "estatistica-qualidade",
+      "position": 1
+    },
+    {
+      "id": "controle",
+      "name": "Controle de processos",
+      "courseId": "estatistica-qualidade",
+      "position": 2
+    },
+    {
+      "id": "movimento",
+      "name": "Forças em máquinas",
+      "courseId": "fisica-metalurgia",
+      "position": 1
+    },
+    {
+      "id": "energia",
+      "name": "Energia e transformação",
+      "courseId": "fisica-metalurgia",
+      "position": 2
+    },
+    {
+      "id": "materiais",
+      "name": "Materiais e reações",
+      "courseId": "quimica-sustentabilidade",
+      "position": 1
+    },
+    {
+      "id": "recursos",
+      "name": "Uso responsável de recursos",
+      "courseId": "quimica-sustentabilidade",
+      "position": 2
+    },
+    {
+      "id": "leitura",
+      "name": "Leitura técnica",
+      "courseId": "comunicacao-industria",
+      "position": 1
+    },
+    {
+      "id": "comunicacao",
+      "name": "Comunicação profissional",
+      "courseId": "comunicacao-industria",
+      "position": 2
+    }
+  ],
+  "lessons": [
+    {
+      "id": "unidades",
+      "name": "Unidades de medida",
+      "description": "Conversões entre milímetros, centímetros e metros aplicadas a peças industriais.",
+      "courseId": "matematica-precisao",
+      "moduleId": "medidas",
+      "position": 1
+    },
+    {
+      "id": "paquimetro",
+      "name": "Leitura de instrumentos",
+      "description": "Interpretação de medidas e tolerâncias em exercícios com paquímetro.",
+      "courseId": "matematica-precisao",
+      "moduleId": "medidas",
+      "position": 2
+    },
+    {
+      "id": "desenho",
+      "name": "Escalas no desenho técnico",
+      "description": "Cálculo das dimensões de peças a partir de representações em escala.",
+      "courseId": "matematica-precisao",
+      "moduleId": "escalas",
+      "position": 1
+    },
+    {
+      "id": "simetria",
+      "name": "Simetria e padrões",
+      "description": "Identificação de translações, rotações e reflexões em estampas.",
+      "courseId": "geometria-textil",
+      "moduleId": "formas",
+      "position": 1
+    },
+    {
+      "id": "areas",
+      "name": "Áreas de moldes",
+      "description": "Cálculo de áreas e planejamento do corte para reduzir desperdícios.",
+      "courseId": "geometria-textil",
+      "moduleId": "modelagem",
+      "position": 1
+    },
+    {
+      "id": "proporcoes",
+      "name": "Ampliação proporcional",
+      "description": "Adaptação das medidas de um molde preservando as proporções.",
+      "courseId": "geometria-textil",
+      "moduleId": "modelagem",
+      "position": 2
+    },
+    {
+      "id": "amostras",
+      "name": "Amostragem industrial",
+      "description": "Organização de amostras e construção de tabelas de frequência.",
+      "courseId": "estatistica-qualidade",
+      "moduleId": "dados",
+      "position": 1
+    },
+    {
+      "id": "medias",
+      "name": "Média e dispersão",
+      "description": "Interpretação de indicadores para comparar lotes de produção.",
+      "courseId": "estatistica-qualidade",
+      "moduleId": "dados",
+      "position": 2
+    },
+    {
+      "id": "graficos",
+      "name": "Gráficos de controle",
+      "description": "Leitura de tendências e identificação de variações em processos fictícios.",
+      "courseId": "estatistica-qualidade",
+      "moduleId": "controle",
+      "position": 1
+    },
+    {
+      "id": "atrito",
+      "name": "Movimento e atrito",
+      "description": "Relação entre forças e deslocamento de componentes de uma máquina.",
+      "courseId": "fisica-metalurgia",
+      "moduleId": "movimento",
+      "position": 1
+    },
+    {
+      "id": "calor",
+      "name": "Transferência de calor",
+      "description": "Condução, convecção e radiação em exemplos de fornos industriais.",
+      "courseId": "fisica-metalurgia",
+      "moduleId": "energia",
+      "position": 1
+    },
+    {
+      "id": "eficiencia",
+      "name": "Eficiência energética",
+      "description": "Comparação entre energia utilizada e trabalho realizado em prensas.",
+      "courseId": "fisica-metalurgia",
+      "moduleId": "energia",
+      "position": 2
+    },
+    {
+      "id": "transformacoes",
+      "name": "Transformações químicas",
+      "description": "Reconhecimento de reações e propriedades dos materiais em processos simulados.",
+      "courseId": "quimica-sustentabilidade",
+      "moduleId": "materiais",
+      "position": 1
+    },
+    {
+      "id": "residuos",
+      "name": "Gestão de resíduos",
+      "description": "Classificação de resíduos em uma atividade fictícia e propostas de reaproveitamento.",
+      "courseId": "quimica-sustentabilidade",
+      "moduleId": "recursos",
+      "position": 1
+    },
+    {
+      "id": "instrucoes",
+      "name": "Instruções de trabalho",
+      "description": "Identificação de informações essenciais em manuais e procedimentos fictícios.",
+      "courseId": "comunicacao-industria",
+      "moduleId": "leitura",
+      "position": 1
+    },
+    {
+      "id": "registros",
+      "name": "Registros de ocorrência",
+      "description": "Produção de mensagens objetivas para comunicar situações da rotina industrial.",
+      "courseId": "comunicacao-industria",
+      "moduleId": "comunicacao",
+      "position": 1
+    },
+    {
+      "id": "equipe",
+      "name": "Diálogo em equipe",
+      "description": "Organização de informações para uma passagem de turno clara e respeitosa.",
+      "courseId": "comunicacao-industria",
+      "moduleId": "comunicacao",
+      "position": 2
+    }
+  ]
+}
