@@ -4,12 +4,17 @@ import { Header } from '../components/Header/Header'
 import { Footer } from '../components/Footer/Footer'
 import { Home } from '../pages/Home/Home'
 import { Courses } from '../pages/Courses/Courses'
+import { CourseDetails } from '../pages/CourseDetails/CourseDetails'
+import { Learning } from '../pages/Learning/Learning'
 import { Button } from '../components/Button/Button'
+import { courses } from '../data/courses'
 
 export function AppRoutes() {
-  const { pathname, hash, key } = useLocation()
+  const { pathname, hash } = useLocation()
+  const learning = pathname.startsWith('/aprender/')
   useEffect(() => {
-    document.title = pathname === '/' ? 'SESI + Indústria | Cursos para sua carreira'
+    const course = courses.find((item) => pathname === `/cursos/${item.id}` || pathname === `/aprender/${item.id}`)
+    document.title = course ? `${learning ? 'Sala de aula | ' : ''}${course.shortName} | SESI + Indústria` : pathname === '/' ? 'SESI + Indústria | Cursos para sua carreira'
       : pathname === '/cursos' ? 'Catálogo de cursos | SESI + Indústria'
       : 'Página não encontrada | SESI + Indústria'
     const frame = requestAnimationFrame(() => {
@@ -20,16 +25,18 @@ export function AppRoutes() {
       }
     })
     return () => cancelAnimationFrame(frame)
-  }, [pathname, hash, key])
+  }, [pathname, hash, learning])
 
   return (
     <>
       <a className="skip-link" href="#conteudo">Pular para o conteúdo</a>
-      <Header />
+      {!learning && <Header />}
       <main id="conteudo" tabIndex={-1}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/cursos" element={<Courses />} />
+          <Route path="/cursos/:courseId" element={<CourseDetails />} />
+          <Route path="/aprender/:courseId" element={<Learning />} />
           <Route path="*" element={
             <section className="container placeholder-page">
               <h1>Página não encontrada</h1>
@@ -39,7 +46,7 @@ export function AppRoutes() {
           } />
         </Routes>
       </main>
-      <Footer />
+      {!learning && <Footer />}
     </>
   )
 }

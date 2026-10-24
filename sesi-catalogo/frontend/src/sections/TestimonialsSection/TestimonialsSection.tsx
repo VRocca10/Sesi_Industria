@@ -28,7 +28,7 @@ const testimonials = [
   },
 ]
 
-export function TestimonialsSection() {
+export function TestimonialsSection({ variant = 'default' }: { variant?: 'default' | 'course' }) {
   const id = useId()
   const swiper = useRef<SwiperInstance | null>(null)
   const [index, setIndex] = useState(0)
@@ -40,7 +40,7 @@ export function TestimonialsSection() {
   }
 
   return (
-    <section className="testimonials-section" aria-labelledby="testimonials-title" onKeyDown={(event) => {
+    <section className={`testimonials-section ${variant === 'course' ? 'testimonials-section--course' : ''}`} aria-labelledby="testimonials-title" onKeyDown={(event) => {
       if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return
       if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return
       event.preventDefault()

@@ -1,12 +1,31 @@
-import { Button } from '../../components/Button/Button'
+import { useRef } from 'react'
+import { useCourses } from '../../hooks/useCourses'
+import { useCourseFilters } from '../../hooks/useCourseFilters'
+import { filterCourses } from '../../utils/filterCourses'
+import type { Course } from '../../types/course'
+import { CatalogFilters } from './CatalogFilters'
+import { CatalogResults } from './CatalogResults'
+
+const emptyCourses: readonly Course[] = []
 
 export function Courses() {
+  const { state, retry } = useCourses()
+  const { filters, hasFilters, updateFilter, clearFilters } = useCourseFilters()
+  const searchInput = useRef<HTMLInputElement>(null)
+  const courses = state.status === 'success' ? state.courses : emptyCourses
+  const results = filterCourses(courses, filters)
+
+  function clearAndFocus() {
+    clearFilters()
+    searchInput.current?.focus()
+  }
+
   return (
-    <section className="container placeholder-page" aria-labelledby="catalog-title">
-      <p className="eyebrow">Próxima etapa</p>
-      <h1 id="catalog-title">Catálogo de cursos</h1>
-      <p>A listagem completa com pesquisa, filtros e detalhes será desenvolvida na próxima etapa. Nesta versão, conheça os cursos em destaque na página inicial.</p>
-      <Button to="/#cursos" variant="outline">Conhecer os principais cursos</Button>
+    <section className="container course-catalog" aria-labelledby="catalog-title">
+      <h1 id="catalog-title">Conheça nossos cursos</h1>
+      <p>Escolha um curso para conhecer os detalhes e acessar suas aulas.</p>
+      <CatalogFilters courses={courses} filters={filters} hasFilters={hasFilters} searchInput={searchInput} onChange={updateFilter} onClear={clearAndFocus} />
+      <CatalogResults state={state} results={results} hasFilters={hasFilters} onRetry={retry} onClear={clearAndFocus} />
     </section>
   )
 }

@@ -1,5 +1,6 @@
 import { useId, useRef, useState } from 'react'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { A11y } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import type { Swiper as SwiperInstance } from 'swiper'
@@ -42,11 +43,17 @@ export function CourseCarousel({ courses }: { courses: readonly Course[] }) {
         {courses.map((course) => (
           <SwiperSlide key={course.id}><CourseCard course={course} /></SwiperSlide>
         ))}
+        <SwiperSlide>
+          <Link to="/cursos" className="course-card course-card--all">
+            <span>Todos os cursos</span>
+            <ArrowRight size={32} strokeWidth={1.6} aria-hidden="true" />
+          </Link>
+        </SwiperSlide>
       </Swiper>
       <div className="carousel-footer container">
         <Button to="/cursos" variant="outline">Ver todos os cursos</Button>
         <div className="carousel-controls">
-          <span className="sr-only" role="status">Curso {position.index + 1} de {courses.length}</span>
+          <span className="sr-only" role="status">{position.index < courses.length ? `Curso ${position.index + 1} de ${courses.length}` : 'Todos os cursos'}</span>
           <button type="button" className="carousel-arrow" aria-label="Cursos anteriores" aria-controls={id}
             disabled={position.beginning} onClick={() => move('previous')}>
             <ArrowLeft size={40} strokeWidth={1.6} aria-hidden="true" />

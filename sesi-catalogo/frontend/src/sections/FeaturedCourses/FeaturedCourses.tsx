@@ -1,9 +1,9 @@
 import { CourseCarousel } from '../../components/CourseCarousel/CourseCarousel'
 import { Button } from '../../components/Button/Button'
-import { useFeaturedCourses } from '../../hooks/useFeaturedCourses'
+import { useCourses } from '../../hooks/useCourses'
 
 export function FeaturedCourses() {
-  const { state, retry } = useFeaturedCourses()
+  const { state, retry } = useCourses()
   return (
     <section id="cursos" className="featured-courses" aria-labelledby="featured-title" aria-busy={state.status === 'loading'}>
       <div className="container"><h2 id="featured-title">Principais cursos</h2></div>

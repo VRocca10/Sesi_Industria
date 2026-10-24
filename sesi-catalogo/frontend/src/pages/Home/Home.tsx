@@ -6,12 +6,12 @@ import { CareerSection } from '../../sections/CareerSection/CareerSection'
 
 export function Home() {
   return (
-    <>
+    <div className="home-page">
       <HeroSection />
       <FeaturedCourses />
       <ImpactSection />
       <TestimonialsSection />
       <CareerSection />
-    </>
+    </div>
   )
 }

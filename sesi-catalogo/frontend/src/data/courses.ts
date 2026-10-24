@@ -10,7 +10,6 @@ const languages: CourseCategory = {
   id: 'linguagens', name: 'Linguagens', icon: '/assets/icon-linguagens-20px.svg',
 }
 
-// Dados fictícios. Imagens oficiais provisórias; ver diferenças no README.
 export const courses: Course[] = [
   {
     id: 'matematica-precisao',

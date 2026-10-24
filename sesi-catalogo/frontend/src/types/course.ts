@@ -1,6 +1,10 @@
-export type CourseCategoryId = 'matematica' | 'ciencias-natureza' | 'linguagens'
-export type CourseModality = 'A distância' | 'Semipresencial'
-export type CourseStatus = 'Disponível' | 'Em breve' | 'Encerrado'
+export const courseCategoryIds = ['matematica', 'ciencias-natureza', 'linguagens'] as const
+export const courseModalities = ['A distância', 'Semipresencial'] as const
+export const courseStatuses = ['Disponível', 'Em breve', 'Encerrado'] as const
+
+export type CourseCategoryId = typeof courseCategoryIds[number]
+export type CourseModality = typeof courseModalities[number]
+export type CourseStatus = typeof courseStatuses[number]
 
 export interface CourseCategory {
   id: CourseCategoryId

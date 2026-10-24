@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react'
-import { getFeaturedCourses } from '../services/courseService'
+import { getCourses } from '../services/courseService'
 import type { Course } from '../types/course'
 
-type CourseState =
+export type CourseState =
   | { status: 'loading' }
   | { status: 'success'; courses: readonly Course[] }
   | { status: 'error' }
 
-export function useFeaturedCourses() {
+export function useCourses() {
   const [state, setState] = useState<CourseState>({ status: 'loading' })
   const [attempt, setAttempt] = useState(0)
 
   useEffect(() => {
     let active = true
-    void getFeaturedCourses().then(
+    void getCourses().then(
       (courses) => { if (active) setState({ status: 'success', courses }) },
       () => { if (active) setState({ status: 'error' }) },
     )
