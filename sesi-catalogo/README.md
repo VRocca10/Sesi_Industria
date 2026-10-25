@@ -2,13 +2,14 @@
 
 ## Objetivo da aplicação
 
-Aplicação demonstrativa do processo seletivo Desenvolvedor de Sistemas I. Permite consultar, pesquisar e filtrar seis cursos fictícios, visualizar detalhes e navegar por uma sala de aula demonstrativa.
+Aplicação desenvolvida para o desafio técnico do processo seletivo de Desenvolvedor de Sistemas I. A solução oferece um catálogo de seis cursos fictícios, com pesquisa, filtros combinados, informações detalhadas e navegação por uma sala de aula demonstrativa.
 
-Frontend publicado na Vercel: [Catálogo SESI + Indústria](https://sesi-industria-frontend.vercel.app/).
+| Serviço | Endereço |
+| --- | --- |
+| Aplicação web — Vercel | [Catálogo SESI + Indústria](https://sesi-industria-frontend.vercel.app/) |
+| API — Render | [API do catálogo](https://sesi-catalogo-api-64xg.onrender.com/api/categories) |
 
-Backend no Render (endereço informado para a entrega): [API do catálogo](https://sesi-catalogo-api-64xg.onrender.com). Base dos endpoints: `https://sesi-catalogo-api-64xg.onrender.com/api`.
-
-Não há integração com Moodle nem gerenciamento de cadastro, edição ou exclusão.
+A base dos endpoints é `https://sesi-catalogo-api-64xg.onrender.com/api`. O escopo contempla a consulta de cursos e a demonstração do ambiente de aprendizagem.
 
 ## Documentação da entrega
 
@@ -20,11 +21,11 @@ Não há integração com Moodle nem gerenciamento de cadastro, edição ou excl
 
 ## Funcionalidades
 
-- Consulta de seis cursos fictícios, com pesquisa sem diferenciar acentos e maiúsculas.
+- Consulta de seis cursos fictícios, com pesquisa sem distinção entre acentos, letras maiúsculas e minúsculas.
 - Filtros combinados por categoria, modalidade e status, contagem de resultados e filtros preservados na URL.
 - Detalhes de cada curso, módulos, aulas e sala de aula demonstrativa.
 - Bloqueio dos controles de matrícula para cursos com status “Em breve” ou “Encerrado”.
-- Estados de carregamento, nenhum resultado, curso não encontrado e erro com nova tentativa.
+- Tratamento de carregamento, ausência de resultados, curso não encontrado e falhas de comunicação, com opção de nova tentativa.
 
 ## Tecnologias utilizadas
 
@@ -43,12 +44,21 @@ Os filtros do catálogo são processados pela API. O frontend trata carregamento
 
 ## Estrutura das pastas
 
-- `frontend`: React, TypeScript, Vite, React Router, Axios e Swiper.
-- `backend/Sesi.Catalogo.Api`: API C#/.NET 10, Entity Framework Core e Npgsql.
-- `backend/Sesi.Catalogo.Api/Migrations`: esquema do banco e extensão de busca sem acentos.
-- `backend/Sesi.Catalogo.Api/Data/Seed`: carga fictícia reproduzível, sem duplicação.
-- `backend/tests`: verificação da carga e testes HTTP.
-- `frontend/tests`: testes unitários e roteiros de navegador.
+Os caminhos abaixo são relativos à pasta `sesi-catalogo`.
+
+| Caminho | Responsabilidade |
+| --- | --- |
+| `frontend/src` | Páginas, componentes, hooks, serviços HTTP, tipos e estilos da interface. |
+| `frontend/public` | Recursos estáticos utilizados pela aplicação. |
+| `frontend/tests` | Testes unitários, dados de teste e roteiros de navegador. |
+| `backend/Sesi.Catalogo.Api` | Projeto da API ASP.NET Core. |
+| `backend/Sesi.Catalogo.Api/Controllers` | Rotas HTTP da API. |
+| `backend/Sesi.Catalogo.Api/DTOs` | Contratos de entrada e saída. |
+| `backend/Sesi.Catalogo.Api/Services` | Serviços de consulta do catálogo. |
+| `backend/Sesi.Catalogo.Api/Models` | Entidades do domínio. |
+| `backend/Sesi.Catalogo.Api/Data` | Contexto, configurações de persistência e carga inicial. |
+| `backend/Sesi.Catalogo.Api/Migrations` | Histórico de evolução do esquema do banco. |
+| `backend/tests` | Testes HTTP e verificação da carga inicial. |
 
 ## Modelo de dados
 
@@ -65,7 +75,15 @@ Uma categoria com cursos não pode ser excluída. A exclusão de um curso remove
 
 ## Instruções para execução
 
-Requisitos: SDK .NET 10, PostgreSQL com a extensão `unaccent` disponível e Node.js 22.12 ou superior.
+### Pré-requisitos
+
+- SDK .NET 10.
+- Node.js 22.12 ou superior, com npm.
+- PostgreSQL com a extensão `unaccent` disponível.
+
+Os comandos a seguir utilizam PowerShell e caminhos relativos à pasta `sesi-catalogo`. O uso de `npm.cmd` evita bloqueios de execução de `npm.ps1` no Windows.
+
+### Inicialização dos serviços
 
 Primeiro, siga a seção **Configuração do banco** abaixo. Em seguida, no primeiro terminal, na pasta `backend/Sesi.Catalogo.Api`, inicie a API:
 
@@ -80,9 +98,15 @@ npm.cmd ci
 npm.cmd run dev
 ```
 
-Abra o endereço exibido pelo Vite. A API precisa continuar rodando. As portas 5173 e 5174 do Vite e 4173 do preview, em `localhost` e `127.0.0.1`, estão liberadas no CORS de desenvolvimento. Para outra porta, ajuste `Cors:AllowedOrigins` e reinicie a API.
+Abra o endereço exibido pelo Vite e mantenha os dois serviços em execução. A política CORS de desenvolvimento permite as portas 5173 e 5174 do Vite e 4173 do preview, em `localhost` e `127.0.0.1`. Para utilizar outra porta, ajuste `Cors:AllowedOrigins` e reinicie a API.
 
-O front utiliza `http://localhost:5000/api` por padrão. Para alterar, crie `frontend/.env.local` com `VITE_API_BASE_URL` e reinicie o Vite. Não coloque credenciais em variáveis `VITE_`, pois elas são públicas no navegador.
+O frontend utiliza `http://localhost:5000/api` por padrão. Para alterar esse endereço, crie `frontend/.env.local` com a configuração abaixo e reinicie o Vite:
+
+```dotenv
+VITE_API_BASE_URL=http://localhost:5000/api
+```
+
+Variáveis com prefixo `VITE_` ficam disponíveis no navegador e devem conter apenas informações públicas.
 
 ## Configuração do banco
 
@@ -104,7 +128,7 @@ dotnet ef database update -- --environment Development
 
 Substitua usuário, senha, host e porta conforme sua instalação. Se a conexão já estiver salva, não é necessário repetir os comandos de User Secrets. A senha fica fora do repositório.
 
-A migration cria as tabelas e a extensão `unaccent`; o usuário do banco precisa ter permissão para essas operações. A carga inicial insere três categorias, seis cursos, doze módulos e dezessete aulas. Reaplicar a atualização não duplica os registros da carga. As migrations são executadas por comando, sem aplicação automática na inicialização da API.
+As migrations criam as tabelas e a extensão `unaccent`; o usuário do banco precisa ter permissão para essas operações. A carga inicial insere três categorias, seis cursos, doze módulos e dezessete aulas. Reexecutar a atualização preserva os registros existentes e não duplica a carga. As migrations são aplicadas explicitamente por comando, antes da execução da API.
 
 ## Endpoints
 
@@ -116,7 +140,9 @@ A migration cria as tabelas e a extensão `unaccent`; o usuário do banco precis
 
 Pesquisa e filtros podem ser combinados com `search`, `category`, `modality` e `status`. A busca ignora acentos e maiúsculas. Exemplo: `/api/courses?search=fisica&category=ciencias-natureza&modality=Semipresencial`.
 
-O front consulta a API para obter os cursos; não há fallback para os dados de teste. Carregamento, ausência de resultados, 404 e falhas de rede têm tratamento próprio. Consultas anteriores são canceladas e a pesquisa aguarda 250 ms sem digitação.
+A API retorna `400` para parâmetros inválidos, `404` para cursos inexistentes e `500` para falhas internas. Pesquisas sem resultados retornam `200` com a lista vazia. Consulte o [README do backend](backend/README.md) para os contratos e valores aceitos nos filtros.
+
+O frontend aguarda 250 ms após a última digitação antes de enviar a pesquisa e cancela requisições anteriores para evitar a exibição de respostas desatualizadas.
 
 ## Validação
 
@@ -167,6 +193,6 @@ O frontend está preparado para a Vercel em `frontend/vercel.json`, com build Vi
 4. Configure `Cors__AllowedOrigins__0` na API com a origem definitiva do frontend e reinicie a API.
 5. Confira acesso direto às rotas, pesquisa, filtros, detalhes e comunicação com o banco no ambiente publicado.
 
-Não grave a conexão do banco no repositório nem em variáveis `VITE_`, que são públicas. O endereço do frontend publicado está informado no início deste documento. A validação da integração no ambiente publicado e a construção da imagem Docker não foram confirmadas nesta revisão documental.
+Configure a conexão do banco exclusivamente no ambiente da API. As variáveis `VITE_` são incorporadas ao frontend durante o build; alterações nesses valores exigem uma nova publicação. O serviço gratuito do Render pode apresentar atraso na primeira requisição após um período de inatividade, conforme o aviso exibido no painel de hospedagem.
 
 O registro de uso de Inteligência Artificial está no arquivo separado [USO_DE_IA.md](USO_DE_IA.md), na raiz do projeto, abrangendo frontend e backend.
