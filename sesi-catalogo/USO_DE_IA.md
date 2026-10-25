@@ -1,10 +1,29 @@
 # Uso de Inteligência Artificial
 
-## Ferramenta e objetivo
+Este documento registra o uso de IA no frontend, no backend e na preparação da publicação do Catálogo SESI + Indústria. Os registros de etapas anteriores são históricos; atualmente, o frontend consulta a API .NET conectada ao PostgreSQL.
 
-Codex, da OpenAI, utilizado para implementar e revisar o front-end React/TypeScript, adaptar os layouts às imagens fornecidas e verificar requisitos do desafio. Todos os dados educacionais nesta etapa são fictícios.
+## 1. Ferramenta utilizada
 
-## Solicitações relevantes e aproveitamento
+Codex, da OpenAI.
+
+## 2. Objetivo do uso
+
+Auxiliar na implementação e revisão do frontend React/TypeScript e do backend C#/.NET, adaptar os layouts às referências fornecidas, integrar a API ao PostgreSQL, preparar configurações de publicação e verificar requisitos do desafio. Todos os dados educacionais do catálogo são fictícios.
+
+## 3. Prompts relevantes: conteúdo aproveitado ou descartado
+
+Os prompts abaixo são trechos das solicitações registradas durante o desenvolvimento. A indicação de descarte também abrange soluções de etapas anteriores que foram substituídas.
+
+| Prompt ou contexto | Aproveitado | Descartado ou substituído |
+| --- | --- | --- |
+| “Cada matéria ter sua tela respectiva” | Rotas e conteúdo parametrizados por curso. | Conteúdo único compartilhado entre cursos com informações diferentes. |
+| “Falando nos requisitos exclusivos do front, o que preciso fazer e o que está pronto” | Revisão das lacunas de pesquisa, filtros, contagem e estados do catálogo. | A implementação inicial sem esses recursos foi complementada. |
+| “Faça o que ainda falta, por favor” | Pesquisa, filtros combinados, limpeza e estados visuais. | A fonte local de cursos, usada naquela etapa, foi substituída pela API na integração posterior. |
+| “Faça um code review [...] apenas performance e estrutura [...] não modifique nada de layout ou tela” | Separação de componentes e hooks e redução de processamento duplicado. | Mudanças de layout e CSS ficaram fora do escopo dessa revisão. |
+| “agora vamos começar a integração” | Axios, endpoints existentes, cancelamento, debounce e validação do contrato. | Importação dos dados locais pela aplicação e uso desses dados como fallback. |
+| “agora prepare meu codigo para ser versionado na vercel” | Configuração de build, rotas e guia de publicação. | Uso do endereço localhost como API do site publicado. |
+
+### Histórico e decisões por etapa
 
 - “Cada matéria ter sua tela respectiva”: aproveitada a parametrização das rotas e do conteúdo com os dados de cada curso.
 - “Falando nos requisitos exclusivos do front, o que preciso fazer e o que está pronto”: aproveitada a revisão que identificou ausência de pesquisa, filtros combináveis, contagem e estados de catálogo.
@@ -13,7 +32,9 @@ Codex, da OpenAI, utilizado para implementar e revisar o front-end React/TypeScr
 - A integração com backend foi adiada por instrução do usuário, em vez de ser incluída nesta etapa.
 - “Faça um code review [...] apenas performance e estrutura [...] não modifique nada de layout ou tela”: aproveitada a separação de componentes e hooks e a eliminação de processamento duplicado. Não foram introduzidas dependências ou alterações de CSS. Foram comparadas oito capturas de telas antes e depois da refatoração, sem diferenças.
 
-## Validação
+## 4. Como o conteúdo foi validado
+
+As verificações abaixo foram registradas durante as respectivas etapas de implementação. Esta organização documental não representa uma nova execução dos testes.
 
 Na etapa inicial do backend, o Codex também foi utilizado para criar os modelos C#, o contexto e as configurações do EF Core e a migration inicial. Foram verificados compilação, aplicação ao PostgreSQL local, ausência de mudanças pendentes no modelo e repetição da atualização sem reaplicar a migration. A conexão usa User Secrets, sem registrar senha no código.
 
@@ -30,11 +51,13 @@ Na etapa seguinte, o prompt “agora vamos começar a integração” orientou a
 - Verificação de ausência de overflow horizontal do catálogo em cinco larguras, além do link de pular ao conteúdo por teclado.
 - Inspeção de captura do catálogo. A auditoria completa com leitor de tela e a comparação integral com Figma não foram realizadas.
 
-## Exemplo de inadequação e correção
+## 5. Exemplo de erro ou inadequação identificado
 
 A primeira implementação permitia que cursos “Em breve” e “Encerrado” exibissem o mesmo botão de matrícula dos cursos disponíveis. O status não era mostrado no catálogo.
 
-Correção: status passou a aparecer nos cartões do catálogo e nos detalhes. Os dois controles de matrícula nos detalhes ficam desabilitados com mensagem correspondente para ofertas indisponíveis. O teste de navegador verifica esse comportamento para um curso de cada status indisponível.
+## 6. Correção realizada
+
+O status passou a aparecer nos cartões do catálogo e nos detalhes. Os dois controles de matrícula nos detalhes ficam desabilitados com mensagem correspondente para ofertas indisponíveis. O teste de navegador verifica esse comportamento para um curso de cada status indisponível.
 
 O código gerado por IA foi ajustado durante a implementação e não foi considerado validado apenas por ter sido gerado.
 
