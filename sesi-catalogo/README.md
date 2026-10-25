@@ -195,4 +195,14 @@ O frontend está preparado para a Vercel em `frontend/vercel.json`, com build Vi
 
 Configure a conexão do banco exclusivamente no ambiente da API. As variáveis `VITE_` são incorporadas ao frontend durante o build; alterações nesses valores exigem uma nova publicação. O serviço gratuito do Render pode apresentar atraso na primeira requisição após um período de inatividade, conforme o aviso exibido no painel de hospedagem.
 
+## Limitações conhecidas
+
+- A sala de aula é demonstrativa, com progresso fixo, sem inscrição real, autenticação ou integração com Moodle.
+- O escopo da API contempla consultas; não há funcionalidades de cadastro, edição ou exclusão de cursos.
+- As fotos dos seis cursos diferem das referências do Figma e foram substituídas intencionalmente por imagens relacionadas ao conteúdo de cada oferta.
+- Páginas institucionais e redes sociais sem destino estão desativadas no rodapé; algumas telas apresentam mensagens de conteúdo futuro.
+- A reprodução do vídeo depende da configuração de `VITE_PRESENTATION_VIDEO_URL`. Sem uma URL configurada, a interface apresenta uma mensagem de indisponibilidade.
+- A comparação visual integral com o Figma e a auditoria completa de acessibilidade com leitor de tela e outros navegadores permanecem pendentes.
+- O backend utiliza hospedagem gratuita no Render e pode apresentar atraso na primeira requisição após um período de inatividade.
+
 O registro de uso de Inteligência Artificial está no arquivo separado [USO_DE_IA.md](USO_DE_IA.md), na raiz do projeto, abrangendo frontend e backend.
