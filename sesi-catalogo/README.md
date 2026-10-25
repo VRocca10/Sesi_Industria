@@ -4,6 +4,10 @@
 
 Aplicação demonstrativa do processo seletivo Desenvolvedor de Sistemas I. Permite consultar, pesquisar e filtrar seis cursos fictícios, visualizar detalhes e navegar por uma sala de aula demonstrativa.
 
+Frontend publicado na Vercel: [Catálogo SESI + Indústria](https://sesi-industria-frontend.vercel.app/).
+
+Backend no Render (endereço informado para a entrega): [API do catálogo](https://sesi-catalogo-api-64xg.onrender.com). Base dos endpoints: `https://sesi-catalogo-api-64xg.onrender.com/api`.
+
 Não há integração com Moodle nem gerenciamento de cadastro, edição ou exclusão.
 
 ## Documentação da entrega
@@ -163,11 +167,11 @@ O frontend está preparado para a Vercel em `frontend/vercel.json`, com build Vi
 4. Configure `Cors__AllowedOrigins__0` na API com a origem definitiva do frontend e reinicie a API.
 5. Confira acesso direto às rotas, pesquisa, filtros, detalhes e comunicação com o banco no ambiente publicado.
 
-Não grave a conexão do banco no repositório nem em variáveis `VITE_`, que são públicas. O deploy remoto e a construção da imagem Docker ainda não foram realizados, conforme os registros atuais do projeto.
+Não grave a conexão do banco no repositório nem em variáveis `VITE_`, que são públicas. O endereço do frontend publicado está informado no início deste documento. A validação da integração no ambiente publicado e a construção da imagem Docker não foram confirmadas nesta revisão documental.
 
 ## Limitações conhecidas
 
-- Publicação remota, ZIP de entrega e links definitivos ainda pendentes.
+- ZIP de entrega e link do repositório ainda precisam ser consolidados na documentação final.
 - Sala de aula demonstrativa, com progresso fixo, sem inscrição real, autenticação ou integração com Moodle.
 - Ausência de gerenciamento de cadastro, edição ou exclusão de cursos.
 - Fotos dos seis cursos diferentes das referências do Figma, substituídas intencionalmente por imagens relacionadas ao conteúdo.
