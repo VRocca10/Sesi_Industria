@@ -169,14 +169,4 @@ O frontend está preparado para a Vercel em `frontend/vercel.json`, com build Vi
 
 Não grave a conexão do banco no repositório nem em variáveis `VITE_`, que são públicas. O endereço do frontend publicado está informado no início deste documento. A validação da integração no ambiente publicado e a construção da imagem Docker não foram confirmadas nesta revisão documental.
 
-## Limitações conhecidas
-
-- ZIP de entrega e link do repositório ainda precisam ser consolidados na documentação final.
-- Sala de aula demonstrativa, com progresso fixo, sem inscrição real, autenticação ou integração com Moodle.
-- Ausência de gerenciamento de cadastro, edição ou exclusão de cursos.
-- Fotos dos seis cursos diferentes das referências do Figma, substituídas intencionalmente por imagens relacionadas ao conteúdo.
-- Páginas institucionais e redes sem destino desativadas no rodapé; algumas telas apresentam mensagens de conteúdo futuro.
-- Vídeo dependente de `VITE_PRESENTATION_VIDEO_URL`; sem configuração, é exibida mensagem de indisponibilidade.
-- Comparação visual integral com o Figma e auditoria completa com leitor de tela e outros navegadores pendentes.
-
 O registro de uso de Inteligência Artificial está no arquivo separado [USO_DE_IA.md](USO_DE_IA.md), na raiz do projeto, abrangendo frontend e backend.
